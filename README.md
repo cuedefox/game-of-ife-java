@@ -23,6 +23,7 @@ Para ejecutar el juego con un tablero de 50x50 celdas, 100 generaciones, una vel
 
 ```bash
 java GameOfLife w=50 h=50 g=100 s=100 t=20 p="101#010#111"
+```
 
 ## Licencia
 
