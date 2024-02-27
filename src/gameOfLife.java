@@ -17,7 +17,7 @@ public class GameOfLife extends JFrame {
 
     private JButton[][] boardButs;
     private boolean[][] boardState;
-    private volatile boolean running;
+    private volatile boolean running; // volatile garantiza el buen funcionamiento de la variable en cuanto a los hilos
 
     // Constructor de la clase
     public GameOfLife(String[] args) {
@@ -44,7 +44,7 @@ public class GameOfLife extends JFrame {
             String[] parts = arg.split("=");
 
             if (parts.length != 2) {
-                System.out.println("Formato de argumento no válido: " + arg);
+                System.out.println("Formato de argumento no valido: " + arg);
                 System.exit(1);
             }
 
@@ -59,10 +59,10 @@ public class GameOfLife extends JFrame {
                             System.out.println("Width (w) debe ser uno de los siguientes valores: 10, 20, 40 o 80.");
                             System.exit(1);
                         }
-                        numCellsY = width;
-                        System.out.println("Width = [" + numCellsY + "]");
+                        numCellsX = width;
+                        System.out.println("Width = [" + numCellsX + "]");
                     } catch (NumberFormatException e) {
-                        System.out.println("Width (w) debe ser un número entero.");
+                        System.out.println("Width (w) debe ser un numero entero.");
                         System.exit(1);
                     }
                     break;
@@ -73,10 +73,10 @@ public class GameOfLife extends JFrame {
                             System.out.println("Height (h) debe ser uno de los siguientes valores: 10, 20 o 40.");
                             System.exit(1);
                         }
-                        numCellsX = height;
-                        System.out.println("Height = [" + numCellsX + "]");
+                        numCellsY = height;
+                        System.out.println("Height = [" + numCellsY + "]");
                     } catch (NumberFormatException e) {
-                        System.out.println("Height (h) debe ser un número entero.");
+                        System.out.println("Height (h) debe ser un numero entero.");
                         System.exit(1);
                     }
                     break;
@@ -84,13 +84,13 @@ public class GameOfLife extends JFrame {
                     try {
                         int generations = Integer.parseInt(value);
                         if (generations < 0 && generations != 0) {
-                            System.out.println("Generations (g) debe ser un número no negativo o 0 para infinito.");
+                            System.out.println("Generations (g) debe ser un numero no negativo o 0 para infinito.");
                             System.exit(1);
                         }
                         g = generations;
                         System.out.println("Generations = [" + g + "]");
                     } catch (NumberFormatException e) {
-                        System.out.println("Generations (g) debe ser un número entero.");
+                        System.out.println("Generations (g) debe ser un numero entero.");
                         System.exit(1);
                     }
                     break;
@@ -98,13 +98,13 @@ public class GameOfLife extends JFrame {
                     try {
                         int speed = Integer.parseInt(value);
                         if (speed < 250 || speed > 1000) {
-                            System.out.println("Speed (s) debe ser un número entre 250 y 1000 (inclusive).");
+                            System.out.println("Speed (s) debe ser un numero entre 250 y 1000 (inclusive).");
                             System.exit(1);
                         }
                         millisGen = speed;
                         System.out.println("Speed = [" + millisGen + "]");
                     } catch (NumberFormatException e) {
-                        System.out.println("Speed (s) debe ser un número entero.");
+                        System.out.println("Speed (s) debe ser un numero entero.");
                         System.exit(1);
                     }
                     break;
@@ -113,7 +113,7 @@ public class GameOfLife extends JFrame {
                         buttonSize = Integer.parseInt(value);
                         System.out.println("Button size = [" + buttonSize + "]");
                     } catch (NumberFormatException e) {
-                        System.out.println("Button size (t) debe ser un número entero.");
+                        System.out.println("Button size (t) debe ser un numero entero.");
                         System.exit(1);
                     }
                     break;
@@ -194,17 +194,17 @@ public class GameOfLife extends JFrame {
                 }
             }
         } else {
-            // Si se proporciona una cadena de población inicial específica
+            // Si se proporciona una cadena de población inicial especifica
             String[] sections = populationString.split("#");
             if (sections.length > numCellsY || sections[0].length() > numCellsX) {
-                System.out.println("¡La población inicial no cabe en la cuadrícula!");
+                System.out.println("¡La poblacion inicial no cabe en la cuadricula!");
                 System.exit(1);
             }
             for (int i = 0; i < numCellsY; i++) {
                 if (i < sections.length) {
                     String section = sections[i];
                     if (section.length() > numCellsX) {
-                        System.out.println("¡La población inicial no cabe en la cuadrícula!");
+                        System.out.println("¡La poblacion inicial no cabe en la cuadricula!");
                         System.exit(1);
                     }
                     for (int j = 0; j < numCellsX; j++) {
@@ -232,7 +232,7 @@ public class GameOfLife extends JFrame {
         running = true;
         final int[] currentGeneration = {0};
         new Thread(() -> {
-            while (running && (g == 0 || currentGeneration[0] < g)) { // Ejecutar mientras esté activo y no se haya alcanzado el límite de generaciones
+            while (running && (g == 0 || currentGeneration[0] < g)) { // Ejecutar mientras esté activo y no se haya alcanzado el limite de generaciones
                 updateBoard();
                 updateInterface();
                 try {
@@ -289,7 +289,7 @@ public class GameOfLife extends JFrame {
         return neighbors;
     }
 
-    // Metodo para actualizar la interfaz grafica según el estado del tablero
+    // Metodo para actualizar la interfaz grafica segun el estado del tablero
     private void updateInterface() {
         for (int i = 0; i < numCellsY; i++) {
             for (int j = 0; j < numCellsX; j++) {
